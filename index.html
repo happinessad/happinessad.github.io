@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MessCraft</title>
+<meta name="description" content="MessCraft is real Minecraft that you can play in any regular web browser. Works on all chromebooks. Supports singleplayer and multiplayer." />
+<meta name="keywords" content="minecraft, eaglercraft, singleplayer, applet, replit, browser, html5, javascript, chromebook, lax1dude, games, eagler" />
+<meta property="og:title" content="MessCraft" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://media.discordapp.net/attachments/378764518081429506/932053915061587978/thumbnail2.png" />
+<meta property="og:description" content="MessCraft is real Minecraft that you can play in any regular web browser. Works on all chromebooks." />
+<meta property="og:url" content="https://mess.eu.org/web/" />
+
+<script type="text/javascript">
+  if (window.location.protocol !== 'https:') {
+    window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.hash;
+  }
+</script>
+
+<style>
+  :root {
+    --bg: #111215;
+    --card-bg: #181a20;
+    --border: #262933;
+    --btn-bg: #22252e;
+    --btn-border: #333846;
+    --btn-shadow: #14161c;
+    --green-bg: #3a8325;
+    --green-hover: #469b2d;
+    --green-border: #56b539;
+    --green-shadow: #1f4714;
+    --text: #ededed;
+    --text-dim: #7f8596;
+    --dot-green: #3cd070;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 50% 15%, rgba(40, 47, 66, 0.45) 0%, transparent 65%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 28px 28px, 28px 28px;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Header */
+  .brand {
+    text-align: center;
+    margin-bottom: 22px;
+    user-select: none;
+  }
+
+  h1 {
+    font-size: clamp(2.3rem, 6vw, 2.9rem);
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    text-shadow: 0 4px 0 #18191f, 0 8px 16px rgba(0,0,0,0.6);
+    text-transform: uppercase;
+  }
+
+  /* Global Online Counter */
+  .global-online {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 4px 12px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--dot-green);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--dot-green);
+  }
+
+  .global-online strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* Launcher Card */
+  .launcher-card {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .btn-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .play-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-bottom: 4px solid var(--btn-shadow);
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+
+  .play-btn:hover {
+    background: #2b2f3b;
+    border-color: #42485a;
+  }
+
+  .play-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+    margin-bottom: 2px;
+  }
+
+  /* 26.2 Green Button */
+  .play-btn.green {
+    background: var(--green-bg);
+    border-color: var(--green-border);
+    border-bottom: 4px solid var(--green-shadow);
+  }
+
+  .play-btn.green:hover {
+    background: var(--green-hover);
+    border-color: #63cb42;
+  }
+
+  .play-btn.green:active {
+    border-bottom-width: 2px;
+  }
+
+  /* Player Count on Button */
+  .online-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.28);
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .online-tag.offline {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .online-tag::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dot-green);
+  }
+
+  .online-tag.offline::before {
+    background: #666a78;
+  }
+
+  /* Footer */
+  .footer-actions {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .notice {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .discord-link {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0.9;
+    transition: opacity 0.15s ease;
+  }
+
+  .discord-link:hover {
+    opacity: 1;
+  }
+
+  .discord-link img {
+    height: 20px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="brand">
+    <h1>MessCraft</h1>
+    <div class="global-online">
+      <span class="status-dot"></span>
+      <span id="global-counter">Connecting...</span>
+    </div>
+  </header>
+
+  <main class="launcher-card">
+    <div class="btn-list">
+      <a class="play-btn" href="https://happinessad.github.io/html/?up=2">
+        <span>Play 1.5.2</span>
+        <span class="online-tag" id="count-1-5">...</span>
+      </a>
+
+      <a class="play-btn" href="https://x.mess.eu.org/?up=5">
+        <span>Play 1.8.8</span>
+        <span class="online-tag" id="count-1-8">...</span>
+      </a>
+
+      <a class="play-btn" href="https://happinessad.github.io/x/12/?up=7">
+        <span>Play 1.12.2</span>
+        <span class="online-tag" id="count-1-12">...</span>
+      </a>
+
+      <!-- 26.2 styled with green accent -->
+      <a class="play-btn green no-iframe" href="https://happinessad.github.io/x/26/?up=1">
+        <span>Play 26.2</span>
+        <span class="online-tag" id="count-26">...</span>
+      </a>
+    </div>
+
+    <footer class="footer-actions">
+      <span class="notice">Join our community</span>
+      <a class="discord-link" href="https://discord.gg/kbzUdZQWgd" target="_blank" rel="noopener noreferrer">
+        <img src="https://discord.com/api/guilds/944634893420343357/widget.png?style=shield" alt="Discord Server"/>
+      </a>
+    </footer>
+  </main>
+</div>
+
+<script>
+  function getServerOnline(addr) {
+    return new Promise((resolve, reject) => {
+      if (!addr.startsWith("ws://") && !addr.startsWith("wss://")) {
+        const proto = location.protocol === "https:" ? "wss" : "ws";
+        addr = `${proto}://${addr}`;
+      }
+
+      const socket = new WebSocket(addr);
+
+      const timer = setTimeout(() => {
+        socket.close();
+        reject(new Error("Timeout"));
+      }, 5000);
+
+      socket.onopen = () => socket.send("Accept: MOTD");
+
+      socket.onmessage = (e) => {
+        if (typeof e.data === "string") {
+          try {
+            const data = JSON.parse(e.data);
+            if (data?.type?.toLowerCase() === "motd") {
+              clearTimeout(timer);
+              socket.close();
+              resolve({
+                online: data.data.online ?? 0,
+                max: data.data.max ?? 0
+              });
+            }
+          } catch (err) {
+            clearTimeout(timer);
+            socket.close();
+            reject(err);
+          }
+        }
+      };
+
+      socket.onerror = (err) => {
+        clearTimeout(timer);
+        reject(err);
+      };
+    });
+  }
+
+  // Server Addresses & UI targets
+  const serverList = [
+    { id: 'count-1-5', addr: 'wss://mess.eu.org/s1' },
+    { id: 'count-1-8', addr: 'wss://x.mess.eu.org/' },
+    { id: 'count-1-12', addr: 'wss://messcraft.ovh/' },
+    { id: 'count-26', addr: 'wss://messcraft.uk' }
+  ];
+
+  function refreshOnline() {
+    let globalTotal = 0;
+    let completedCount = 0;
+
+    serverList.forEach((server) => {
+      const el = document.getElementById(server.id);
+
+      getServerOnline(server.addr)
+        .then((res) => {
+          el.textContent = `${res.online} online`;
+          el.classList.remove('offline');
+          globalTotal += res.online;
+        })
+        .catch(() => {
+          el.textContent = 'offline';
+          el.classList.add('offline');
+        })
+        .finally(() => {
+          completedCount++;
+          if (completedCount === serverList.length) {
+            const globalEl = document.getElementById('global-counter');
+            globalEl.innerHTML = `<strong>${globalTotal}</strong> players online`;
+          }
+        });
+    });
+  }
+
+  // Fetch immediately on load, then update every 20 seconds
+  refreshOnline();
+  setInterval(refreshOnline, 20000);
+
+  // Desktop click interceptor for play buttons
+  if (!/Mobi|Android/i.test(navigator.userAgent)) {
+    document.querySelectorAll('a.play-btn').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var url = this.href;
+        var win = window.open();
+        var isNoIframe = this.classList.contains('no-iframe');
+
+        if (!win) {
+          window.location.href = url;
+          return;
+        }
+
+        if (isNoIframe) {
+          win.document.write('<style>body{background:#111215;color:#eee;font-family:sans-serif;display:grid;place-content:center;height:100vh;margin:0;}</style><p>Loading...</p>');
+
+          fetch(url)
+            .then(function(response) {
+              if (!response.ok) throw new Error('Status: ' + response.status);
+              return response.text();
+            })
+            .then(function(html) {
+              var baseTag = '<base href="' + url + '">';
+              if (/<head[^>]*>/i.test(html)) {
+                html = html.replace(/<head[^>]*>/i, '$&' + baseTag);
+              } else {
+                html = baseTag + html;
+              }
+
+              win.document.open();
+              win.document.write(html);
+              win.document.close();
+
+              win.document.title = "MessCraft";
+              var favicon = win.document.querySelector('link[rel*="icon"]') || win.document.createElement('link');
+              favicon.rel = 'icon';
+              favicon.href = 'https://mess.eu.org/favicon.ico';
+              win.document.head.appendChild(favicon);
+            })
+            .catch(function(err) {
+              win.document.body.innerHTML = '<p>Ошибка: ' + err.message + '</p>';
+            });
+
+        } else {
+          win.document.body.style.margin = "0";
+          win.document.body.style.height = "100vh";
+          win.document.body.style.overflow = "hidden";
+          win.document.body.style.background = "#000";
+
+          var favicon = win.document.createElement('link');
+          favicon.rel = 'icon';
+          favicon.href = 'https://mess.eu.org/favicon.ico';
+          win.document.head.appendChild(favicon);
+
+          var iframe = win.document.createElement('iframe');
+          iframe.src = url;
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          iframe.style.border = "none";
+          iframe.style.display = "block";
+          
+          win.document.title = "MessCraft";
+          win.document.body.appendChild(iframe);
+        }
+
+        var interval = setInterval(function() {
+          if (win && win.closed) {
+            clearInterval(interval);
+            win = undefined;
+          }
+        }, 500);
+      });
+    });
+  }
+</script>
+</body>
+</html>
